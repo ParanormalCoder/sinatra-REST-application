@@ -34,7 +34,7 @@ class HangpersonGame
   
   def check_win_or_lose()
     result = :win
-    puts @wrong_guesses
+    
     if(@wrong_guesses.length >= 7)
       result = :lose
     else
@@ -44,35 +44,40 @@ class HangpersonGame
         end
       end  
     end
-    byebug
+    
     return result
   end
   
   def guess(guess)
-    
     raise ArgumentError, 'Argument is not numeric' if !(guess.is_a? String) || (guess =~ /^\w+$/).nil? 
     
     guess_cleaned = guess.strip.downcase
-    is_ok = @word.include? guess_cleaned
-    if is_ok
+    valid = true
+    
+    if @word.include? guess_cleaned
       if !(@guesses.include? guess_cleaned)
         @guesses += guess_cleaned
       else
-        is_ok = false
+        valid = false
       end
     else
       if !(@wrong_guesses.include? guess_cleaned)
         @wrong_guesses += guess_cleaned
+      else
+        valid = false
       end
     end
     
-    return is_ok
+    return valid
   end
+  
   def self.get_random_word
+    
     require 'uri'
     require 'net/http'
     uri = URI('http://watchout4snakes.com/wo4snakes/Random/RandomWord')
     Net::HTTP.post_form(uri ,{}).body
+    
   end
 
 end
