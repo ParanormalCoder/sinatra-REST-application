@@ -49,7 +49,7 @@ class HangpersonGame
   end
   
   def guess(guess)
-    raise ArgumentError, 'Argument is not numeric' if !(guess.is_a? String) || (guess =~ /^\w+$/).nil? 
+    raise ArgumentError, 'Argument is not numeric' if !(guess.is_a? String) || (guess.downcase =~ /^[0-9a-z]+$/).nil? 
     
     guess_cleaned = guess.strip.downcase
     valid = true
