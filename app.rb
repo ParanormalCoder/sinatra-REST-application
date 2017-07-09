@@ -44,7 +44,11 @@ class HangpersonApp < Sinatra::Base
       flash[:message] = "You have already used that letter."
     end
     
-    @game.guess(letter)
+    begin
+      @game.guess(letter)
+    rescue ArgumentError
+      flash[:message] = "Invalid guess."
+    end
     
     case @game.check_win_or_lose
     when :win
